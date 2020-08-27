@@ -17,14 +17,13 @@ function search_data(date) {
 
 
 
-// YOUR CODE HERE!
 
 // function for "filter table" button 
-function handleClick() {
+function filterTable() {
     // insert table appending functionality here
     // placeholder alert
-    var date = document.getElementById("datetime");
-    matchedSightings = search_data(date);
+    var target_date = document.forms['date-search']['search-date'].value;
+    matchedSightings = search_data(target_date);
     numMatches = matchedSightings.length;
     alert(numMatches);
 }
