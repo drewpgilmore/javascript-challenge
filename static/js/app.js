@@ -1,13 +1,15 @@
 // from data.js
 var tableData = data;
 
-//store date selected by 
-//var date_selected = document.getElementById("datetime");
-function search_data(date) {
-    // empty list for matching sightings to be appended to table
+// identify input and button
+var userInput = d3.select(".form-control")
+var filterButton = d3.select("#filter-btn")
+var table = d3.select("tbody")
+
+// function to return date matches
+function matchDates(date) {
     matches = [];
-    // loop through data to search for matching dates
-    tableData.forEach(function(sighting){
+    tableData.forEach(function(sighting) {
         if (sighting.datetime == date) {
             matches.push(sighting);
         }
@@ -15,15 +17,17 @@ function search_data(date) {
     return matches;
 }
 
-
-
-
 // function for "filter table" button 
-function filterTable() {
-    // insert table appending functionality here
-    // placeholder alert
-    var target_date = document.forms['date-search']['search-date'].value;
-    matchedSightings = search_data(target_date);
-    numMatches = matchedSightings.length;
-    alert(numMatches);
-}
+filterButton.on("click", function() {
+    var targetDate = userInput.property("value");
+    matchedSightings = matchDates(targetDate);
+    console.log(matchedSightings);
+    
+    //loop through matches and add to table
+    matchedSightings.forEach((match) => {
+        var row = table.append("tr");
+        Object.entries(match).forEach(function([key, value]) {
+            row.append("td").text(value);
+        })   
+    })
+})
