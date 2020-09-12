@@ -2,12 +2,12 @@
 var tableData = data;
 
 // identify input and button
-var userInput = d3.select(".form-control")
+var dateInput = d3.select("#date-search")
 var filterButton = d3.select("#filter-btn")
 var table = d3.select("tbody")
 
 // function to return date matches
-function matchDates(date) {
+function matchData(date) {   
     matches = [];
     tableData.forEach(function(sighting) {
         if (sighting.datetime == date) {
@@ -19,9 +19,10 @@ function matchDates(date) {
 
 // function for "filter table" button 
 filterButton.on("click", function() {
-    var targetDate = userInput.property("value");
-    matchedSightings = matchDates(targetDate);
-    console.log(matchedSightings);
+    var searchDate = dateInput.property("value");
+    
+    matchedSightings = matchData(searchDate);
+    table.html("");
     
     //loop through matches and add to table
     matchedSightings.forEach((match) => {
@@ -30,4 +31,4 @@ filterButton.on("click", function() {
             row.append("td").text(value);
         })   
     })
-})
+});
